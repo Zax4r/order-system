@@ -13,7 +13,10 @@ from os.path import dirname, abspath
 sys.path.insert(0, dirname(dirname(abspath(__file__))))
 
 from app.database import DATABASE_URL, Base
-from app.models.user import Users
+from app.models.user import User
+from app.models.order import Order
+from app.models.product import Product
+from app.models.outbox import Outbox
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
