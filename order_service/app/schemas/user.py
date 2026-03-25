@@ -8,4 +8,4 @@ class SUserAdd(SUserBase):
     pass
 
 class SUserShow(SUserBase):
-    pass
+    id: int
