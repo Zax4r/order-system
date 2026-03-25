@@ -12,11 +12,4 @@ class Base(DeclarativeBase, AsyncAttrs):
 
 async def get_db():
     async with Session() as session:
-        try:
-            yield session
-            await session.commit()
-        except Exception as e:
-            await session.rollback()
-            raise e
-        finally:
-            await session.close()
+        yield session
