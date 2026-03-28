@@ -1,17 +1,4 @@
 services:
-  backend:
-    build:
-      context: ./order_service
-      dockerfile: Dockerfile
-    container_name: orders_backend
-    ports:
-     - "8000:8000"
-    environment:
-      DATABASE_URL: ${DATABASE_URL}
-    depends_on:
-      pg:
-        condition: service_healthy
-
   pg:
       image: postgres:16-alpine
       environment:
@@ -27,6 +14,25 @@ services:
         interval: 5s
         timeout: 3s
         retries: 3
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.7.0
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+    ports:
+      - "2181:2181"
+
+  kafka:
+    image: confluentinc/cp-kafka:7.7.0
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    ports:
+      - "9092:9092"
 
 volumes:
   order_system:
