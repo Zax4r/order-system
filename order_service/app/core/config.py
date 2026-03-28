@@ -6,6 +6,7 @@ class Settings(BaseSettings):
     DATABASE_URL: str
     POSTGRES_USER: str
     POSTGRES_PASSWORD: str
+    KAFKA_BOOTSTRAP_SERVERS: str
 
     model_config = SettingsConfigDict(
         env_file=os.path.join(
